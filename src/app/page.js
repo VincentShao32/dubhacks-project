@@ -1,6 +1,11 @@
 import Link from "next/link";
 
 export default function Home() {
+  let a = 5;
+  const handleOpenGroupWindowCreate = () => {
+    
+  }
+
   return (
     <ul>
       <li>
