@@ -8,21 +8,21 @@ import Navbar from "./components/Navbar";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <Navbar></Navbar>
-        <header>
-          {/* <SignedOut>
+    <UserProvider>
+      <html lang="en">
+        <body>
+          <Navbar></Navbar>
+          <header>
+            {/* <SignedOut>
               <SignInButton />
             </SignedOut>
             <SignedIn>
               <UserButton />
             </SignedIn> */}
-        </header>
-        <ConvexClientProvider>
-          <UserProvider>{children}</UserProvider>
-        </ConvexClientProvider>
-      </body>
-    </html>
+          </header>
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </body>
+      </html>
+    </UserProvider>
   );
 }
