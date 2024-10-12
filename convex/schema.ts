@@ -8,20 +8,26 @@ export default defineSchema({
     pickup_location: v.string(),
     pickup_address: v.string(),
     restaurant_address: v.string(),
-    order_time: v.string()
+    order_time: v.string(),
   }),
 
   User: defineTable({
-    name: v.string()
-  })
+    name: v.string(),
+  }),
 
-//   users: defineTable({
-//     name: v.string(),
-//     email: v.string(),
-//   }),
+  Messages: defineTable({
+    author: v.string(),
+    body: v.string(),
+    group_order_id: v.id("GroupOrder"),
+  }),
 
-//   likes: defineTable({
-//     liker: v.string(),
-//     messageID: v.string(),
-//   }).index("byMessageID", ["messageID"]),
+  //   users: defineTable({
+  //     name: v.string(),
+  //     email: v.string(),
+  //   }),
+
+  //   likes: defineTable({
+  //     liker: v.string(),
+  //     messageID: v.string(),
+  //   }).index("byMessageID", ["messageID"]),
 });
