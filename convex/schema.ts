@@ -11,6 +11,10 @@ export default defineSchema({
     order_time: v.string()
   }),
 
+  User: defineTable({
+    name: v.string()
+  })
+
 //   users: defineTable({
 //     name: v.string(),
 //     email: v.string(),
