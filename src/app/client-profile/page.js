@@ -1,5 +1,8 @@
 "use client";
-import { useUser } from "@auth0/nextjs-auth0/client";
+
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
 
 const page = () => {
   const { user, error, isLoading } = useUser();
@@ -18,4 +21,7 @@ const page = () => {
   );
 };
 
-export default page;
+export default withPageAuthRequired(page, {
+  onRedirecting: () => <Loading />,
+  onError: (error) => <ErrorMessage>{error.message}</ErrorMessage>,
+});

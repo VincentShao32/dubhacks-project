@@ -9,12 +9,7 @@ export default function Home() {
       <li>
         <Link href="/about">About Us</Link>
       </li>
-      <li>
-        <Link href="/api/auth/login">Login</Link>
-      </li>
-      <li>
-        <a href="/api/auth/logout">Logout</a>
-      </li>
+      <li></li>
     </ul>
   );
 }
