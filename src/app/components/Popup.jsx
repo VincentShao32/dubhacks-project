@@ -32,7 +32,7 @@ const Popup = () => {
   const [placeName, setPlaceName] = useState("");
 
   const [restaurantName, setRestaurantName] = useState("");
-  const [orderByTime, setOrderByTime] = useState("");
+  const [orderByTime, setOrderByTime] = useState(Date.now());
   const [uberLink, setUberLink] = useState("");
 
   const [email, setEmail] = useState("");
@@ -80,7 +80,9 @@ const Popup = () => {
       console.log(placeName);
       const arr = [];
       arr.push(user.email);
-      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: orderByTime, uber_link: uberLink, pickup_location: placeName});
+      const timeInMsSinceEpoch = new Date(orderByTime).getTime();
+      console.log(timeInMsSinceEpoch);
+      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: timeInMsSinceEpoch, uber_link: uberLink, pickup_location: placeName});
       await addEmail({order_id : group_id, user_email : user.email});
       closePopup();
     }
@@ -89,9 +91,10 @@ const Popup = () => {
   return (
     <div>
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg&libraries=places`}
+        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg&libraries=places&callback=Function.prototype`}
         strategy="afterInteractive" // Load script after page becomes interactive
-        onLoad={handleScriptLoad} // Set script loading to true after load
+        onLoad={handleScriptLoad} // Set script loading to true after load TODO: resolve this not loading on first time entering page
+        loading="async"
       />
       <button
         onClick={handleOpenGroupWindowCreate}
@@ -129,6 +132,7 @@ const Popup = () => {
                 value={orderByTime}
                 onChange={handleTimeChange}
                 className=""
+                type="datetime-local"
                 placeholder="Place order by... ex. 5:00 PM"
               ></input>
             </p>
@@ -149,7 +153,7 @@ const Popup = () => {
                     <div>
                       <input
                         {...getInputProps({
-                          placeholder: "Search Places ...",
+                          placeholder: "Search Places ...", 
                           className: "location-search-input",
                         })}
                       />
@@ -182,7 +186,7 @@ const Popup = () => {
                 <p>Loading Google Maps...</p>
               )}
               {/* <button onClick={handleCreateOrder} disabled={restaurantName == "" || orderByTime == "" || uberLink == ""}>Create Group Order</button> */}
-              <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user)}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : "Create Group Order"}</button>
+              <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user) || (new Date(orderByTime).getTime() < Date.now())}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : (new Date(orderByTime).getTime() < Date.now()) ? "Enter a valid time" : "Create Group Order"}</button>
 
               {/* Display coordinates once selected */}
               {/* {coordinates.lat && coordinates.lng && (

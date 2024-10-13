@@ -100,10 +100,13 @@ export const sortGroupOrdersByLocation = query({
 });
 
 export const deleteOldGroupOrders = mutation({
-  args: {},
-  handler: (ctx, args) => {
-    const old = ctx.db.query("GroupOrder").filter(q => 
-      q.lt(q.field("order_time"), Date.now()));
+  args: {current_time : v.number()},
+  handler: async (ctx, args) => {
+    const old = await ctx.db.query("GroupOrder").filter(q => 
+      q.lt(q.field("order_time"), args.current_time)).collect();
+    for(let i = 0; i < old.length; i++){
+      await ctx.db.delete(old[i]._id);
+    }
   }
 });
 

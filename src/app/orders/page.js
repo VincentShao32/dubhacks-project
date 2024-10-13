@@ -36,10 +36,12 @@ export default function page() {
       }
     }
 
-    deleteOldOrders();
-
     get_location();
-    if (orders && location.latitude && location.longitude) {
+    
+    console.log(Date.now());
+    deleteOldOrders({current_time : Date.now()});
+
+    if (orders && location && location.latitude && location.longitude) {
       sort_by_distance();
     }
   }, [orders]);
@@ -50,14 +52,14 @@ export default function page() {
         get_dist(
           a.pickup_lat,
           a.pickup_long,
-          location.latitude,
-          location.longitude
+          location.latitude ? location.latitude : 0,
+          location.longitude ? location.longitude : 0
         ) -
         get_dist(
           b.pickup_lat,
           b.pickup_long,
-          location.latitude,
-          location.longitude
+          location.latitude ? location.latitude : 0,
+          location.longitude ? location.longitude : 0
         )
     );
     orders = sortedOrders;
@@ -81,8 +83,11 @@ export default function page() {
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
       <Popup />
       <h1 className="text-3xl font-[family-name:var(--font-satoshi-variable)] text-red">
-        Upcoming Datch Groups
+        Upcoming Datch Groups*
       </h1>
+      <h2 className="text-1xl font-[family-name:var(--font-satoshi-variable)] text-red">
+        *Only showing groups ordering within 6 hours
+      </h2>
       <form className="flex justify-between items-center gap-4">
         <div
           className="bg-gray-100  rounded-xl h-10 flex items-center p-6 gap-2"

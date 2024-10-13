@@ -33,7 +33,7 @@ const OrderListingLink = ({ order }) => {
         </h1>
         <div className="flex items-center gap-2">
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl">
-            {order.order_time}
+          {new Date(order.order_time).getHours().toString().padStart(2, '0') + ":" + new Date(order.order_time).getMinutes().toString().padStart(2, '0') + (new Date(order.order_time).getHours() < 12 ? " AM" : " PM")}
           </h1>
         </div>
         <div className="p-1"></div>
