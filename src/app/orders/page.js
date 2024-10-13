@@ -2,7 +2,6 @@
 
 import OrderListingLink from "../components/OrderListingLink";
 import { useEffect, useState } from "react";
-import PlacesSearch from "../components/PlacesSearch";
 import Popup from "../components/Popup";
 import { getServerActionDispatcher } from "next/dist/client/components/app-router";
 

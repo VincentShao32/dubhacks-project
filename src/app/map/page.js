@@ -1,7 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import PlacesSearch from "../components/PlacesSearch";
-import Head from "next/head";
 import Popup from "../components/Popup";
 
 import {
