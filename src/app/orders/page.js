@@ -99,7 +99,7 @@ export default function page() {
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
       <Popup />
       <h1 className="text-3xl font-[family-name:var(--font-satoshi-variable)] text-red">
-        Upcoming Datch Groups*
+        Upcoming BiteShare Groups*
       </h1>
       <h2 className="text-1xl font-[family-name:var(--font-satoshi-variable)] text-red">
         *Only showing groups ordering within 6 hours

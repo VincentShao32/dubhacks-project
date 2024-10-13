@@ -117,7 +117,7 @@ const Popup = () => {
         <div className="popup-overlay fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white  rounded-xl shadow-lg max-w-[450px] w-full flex flex-col ">
             <div className="rounded-t-xl text-white font-[family-name:var(--font-satoshi-variable)] bg-red p-6">
-              <h1 className="text-4xl pl-2">New Datch Order</h1>
+              <h1 className="text-4xl pl-2">New BiteShare </h1>
             </div>
             <form
               className="flex flex-col gap-4 px-8 pb-8 pt-4"

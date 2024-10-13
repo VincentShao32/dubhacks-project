@@ -10,8 +10,8 @@ export default function Home() {
     <div className="flex flex-col">
       <div className="min-h-screen flex font-[family-name:var(--font-satoshi-variable)]">
         <div className=" bg-white w-[34%] flex flex-col justify-center  px-[3.5rem] gap-4">
-          <h1 className="font-[family-name:var(--font-satoshi-variable)] text-[10rem] text-red leading-none ">
-            Datch
+          <h1 className="font-[family-name:var(--font-satoshi-variable)] text-[6.25rem] text-red leading-none ">
+            BiteShare
           </h1>
           <h1 className=" text-4xl text-red pb-4">
             The more you share, the more you save
@@ -34,8 +34,8 @@ export default function Home() {
                 Expensive delivery?
               </h1>
               <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
-                Craving late-night takeout, but don't want to spend fees? Datch
-                allows you to save by organizing group online orders.
+                Craving late-night takeout, but don't want to spend fees?
+                BiteShare allows you to save by organizing group online orders.
               </p>
               <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
                 Only pay for what you need.
@@ -50,7 +50,7 @@ export default function Home() {
                 Connect over your favorite foods.
               </h1>
               <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
-                Datch brings communities and campuses together.
+                BiteShare brings communities and campuses together.
               </p>
               <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
                 Meet new friends when trying new food, or reconnect with

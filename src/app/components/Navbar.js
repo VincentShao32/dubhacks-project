@@ -16,7 +16,7 @@ const Navbar = () => {
           list view
         </Link>
         <Link href="/" className="text-4xl">
-          Datch
+          BiteShare
         </Link>
         <Link href="/map" className="text-lg ">
           map view
