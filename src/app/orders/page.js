@@ -6,7 +6,7 @@ import PlacesSearch from "../components/PlacesSearch";
 import Popup from "../components/Popup";
 import { getServerActionDispatcher } from "next/dist/client/components/app-router";
 
-import { useAuth0 } from '@auth0/nextjs-auth0';
+import { useAuth0 } from "@auth0/nextjs-auth0";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
@@ -14,14 +14,14 @@ export default function page() {
   const [restaurant, setRestaurant] = useState("All Restaurants");
   const [distance, setDistance] = useState(1);
   const colors = [
-    'bg-light-red',
-    'bg-light-green',
-    'bg-yellow',
-    'bg-light-blue',
-    'bg-light-purple',
-    "bg-dark-pink"
+    "bg-light-red",
+    "bg-light-green",
+    "bg-yellow",
+    "bg-light-blue",
+    "bg-light-purple",
+    "bg-dark-pink",
   ];
-  let i = -1
+  let i = -1;
   const [location, setLocation] = useState(null);
 
   let orders = useQuery(api.functions.listGroupOrders);
@@ -84,23 +84,19 @@ export default function page() {
     console.log("submitted");
   }
 
-
   const getRandomColor = () => {
     //const randomIndex = Math.floor(Math.random() * colors.length);
-    //return colors[randomIndex]; 
+    //return colors[randomIndex];
     i++;
-    if (i == 5)
-    {
+    if (i == 5) {
       i = 0;
     }
     return colors[i];
-
-  }
+  };
 
   const getDistance = (lat, long, lat2, long2) => {
     return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2));
   };
-
 
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
@@ -140,8 +136,8 @@ export default function page() {
         <button className="bg-red text-white p-2 rounded-xl font-[family-name:var(--font-satoshi-variable)]">
           Submit
         </button>
-      </form>     
-      <OrderListing
+      </form>
+      {/* <OrderListingLink
         order={{
           restaurant: "Chipotle",
           pickup_location: "@ Madrona Hall",
@@ -150,9 +146,9 @@ export default function page() {
           joined: "5",
           distance: "0.1 mi",
         }}
-        color = { getRandomColor() }
-      />
-      <OrderListing
+        color={getRandomColor()}
+      /> */}
+      {/* <OrderListingLink
         order={{
           restaurant: "Aladdin's",
           pickup_location: "@ Willow Hall",
@@ -161,9 +157,9 @@ export default function page() {
           joined: "4",
           distance: "0.2 mi",
         }}
-        color = { getRandomColor() }
+        color={getRandomColor()}
       />
-      <OrderListing
+      <OrderListingLink
         order={{
           restaurant: "BB's Teriyaki",
           pickup_location: "@ Oak Hall",
@@ -172,9 +168,9 @@ export default function page() {
           joined: "2",
           distance: "0.3 mi",
         }}
-        color = { getRandomColor() }
+        color={getRandomColor()}
       />
-      <OrderListing
+      <OrderListingLink
         order={{
           restaurant: "Panera Bread",
           pickup_location: "@ Lander Hall",
@@ -183,9 +179,9 @@ export default function page() {
           joined: "4",
           distance: "0.6 mi",
         }}
-        color = { getRandomColor() }
+        color={getRandomColor()}
       />
-      <OrderListing
+      <OrderListingLink
         order={{
           restaurant: "Starbucks",
           pickup_location: "@ Alder Hall",
@@ -194,9 +190,13 @@ export default function page() {
           joined: "2",
           distance: "0.7 mi",
         }}
-        color = { getRandomColor() }
-      />
-      {orders && orders.map((order) => <OrderListingLink order={order} />)}
+        color={getRandomColor()}
+      /> */}
+
+      {orders &&
+        orders.map((order) => (
+          <OrderListingLink order={order} color={getRandomColor()} />
+        ))}
 
       <Popup></Popup>
     </div>

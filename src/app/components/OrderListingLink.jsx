@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const OrderListingLink = ({ order }) => {
+const OrderListingLink = ({ order, color }) => {
   return (
     <Link
       href={`orders/${order._id}`}
