@@ -1,10 +1,10 @@
 "use client";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
-import OrderListing from "@/app/components/OrderListing";
+import OrderListing from "../../components/OrderListing";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import ReceivedMessage from "@/app/components/ReceivedMessage";
-import SentMessage from "@/app/components/SentMessage";
+import ReceivedMessage from "../../components/ReceivedMessage";
+import SentMessage from "../../components/SentMessage";
 import { useState } from "react";
 
 const page = ({ params }) => {
