@@ -114,57 +114,6 @@ export default function page() {
         </button>
       </form>
       {orders && orders.map((order) => <OrderListingLink order={order} />)}
-      {/* <OrderListing
-        order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
-
-        }}
-      />
-      <OrderListing
-        order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
-        }}
-      />
-      <OrderListing
-        order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
-        }}
-      />
-      <OrderListing
-        order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
-        }}
-      />
-      <OrderListing
-        order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
-        }}
-      /> */}
 
       <Popup></Popup>
     </div>

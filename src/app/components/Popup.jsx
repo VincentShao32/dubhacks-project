@@ -23,8 +23,8 @@ const Popup = () => {
     setIsOpen(true);
   };
 
-  const createPost = useMutation(api.GroupOrderFunctions.createGroupOrder);
-  const addEmail = useMutation(api.GroupOrderFunctions.addUserToGroupOrder);
+  const createPost = useMutation(api.functions.createGroupOrder);
+  const addEmail = useMutation(api.functions.addUserToGroupOrder);
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
