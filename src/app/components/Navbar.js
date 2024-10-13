@@ -10,7 +10,7 @@ const Navbar = () => {
   const { user, error, isLoading } = useUser();
 
   return (
-    <div className="absolute top-0 z-10 w-full bg-black text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
+    <div className="absolute top-0 z-10 w-full bg-red text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
       <div className="flex mx-auto w-fit items-center gap-16">
         <Link href="/orders" className="text-lg ">
           list view
@@ -40,7 +40,7 @@ const Navbar = () => {
       </button>
 
       {open && (
-        <div className="flex flex-col absolute right-0 top-[70px] bg-black p-4 w-[100px] items-center">
+        <div className="flex flex-col absolute right-0 top-[70px] bg-red p-4 w-[100px] items-center">
           {user ? (
             <a href="/api/auth/logout">Log Out</a>
           ) : (
