@@ -23,8 +23,8 @@ const Popup = () => {
     setIsOpen(true);
   };
 
-  const createPost = useMutation(api.GroupOrderFunctions.createGroupOrder);
-  const addEmail = useMutation(api.GroupOrderFunctions.addUserToGroupOrder);
+  const createPost = useMutation(api.functions.createGroupOrder);
+  const addEmail = useMutation(api.functions.addUserToGroupOrder);
 
   const [address, setAddress] = useState('');
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
@@ -37,6 +37,7 @@ const Popup = () => {
 
   const [email, setEmail] = useState('');  
   const { user, error, isLoading } = useUser();
+  const [triedButton, setTriedButton] = useState(false);
   
   const handleNameChange = (event) => {
     setRestaurantName(event.target.value);
@@ -71,14 +72,18 @@ const Popup = () => {
     setUberLink('');
     setOrderByTime('');
     setIsOpen(false);
+    setAddress('');
+    setTriedButton(false);
   };
 
   const handleCreateOrder = async () => {
     if(user){
-      // console.log(user.email);
+      console.log(user.email);
+      console.log(user.name);
+      console.log(placeName);
       const arr = [];
       arr.push(user.email);
-      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: orderByTime});
+      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: orderByTime, uber_link: uberLink, pickup_location: placeName});
       await addEmail({order_id : group_id, user_email : user.email});
     }
   }
@@ -151,14 +156,15 @@ const Popup = () => {
           <p>Loading Google Maps...</p>
         )}
         {/* <button onClick={handleCreateOrder} disabled={restaurantName == "" || orderByTime == "" || uberLink == ""}>Create Group Order</button> */}
-        <button onClick={handleCreateOrder} disabled={false}>Create Group Order</button>
 
         {/* Display coordinates once selected */}
-        {coordinates.lat && coordinates.lng && (
+        {/* {coordinates.lat && coordinates.lng && (
           <div>
             Latitude: {coordinates.lat}, Longitude: {coordinates.lng}
           </div>
-        )}
+        )} */}
+        <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user)}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : "Create Group Order"}</button>
+      
       </div>
             <button onClick={closePopup}>Close Popup</button>
           </div>

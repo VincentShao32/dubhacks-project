@@ -11,6 +11,7 @@ export default defineSchema({
     uber_link: v.string(),
     order_time: v.string(),
     emails: v.array(v.string()),
+    pickup_location: v.string()
   }),
 
   User: defineTable({
