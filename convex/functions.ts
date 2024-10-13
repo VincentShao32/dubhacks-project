@@ -33,7 +33,7 @@ export const listGroupOrders = query({
     args: { author: v.string(), order_time: v.number(), restaurant: v.string(), uber_link: v.string(), pickup_location : v.string(), pickup_address : v.string(), pickup_lat : v.number(), pickup_long : v.number()},
     handler: async (ctx, { author, order_time, restaurant, uber_link, pickup_address, pickup_lat, pickup_long, pickup_location }) => {
     let emails: string[] = []; //TODO: add email of the creator to the array of emails
-      const truncated_name = pickup_location.split(',')[0]
+      const truncated_name = pickup_address.split(',')[0]
       const new_id = await ctx.db.insert("GroupOrder", { author, restaurant, pickup_address, pickup_lat, pickup_long, uber_link, order_time, emails, pickup_location: truncated_name});
       return new_id;
     },
