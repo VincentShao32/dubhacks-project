@@ -4,7 +4,7 @@ import OrderListingLink from "../components/OrderListingLink";
 import { useEffect, useState } from "react";
 import PlacesSearch from "../components/PlacesSearch";
 import Popup from "../components/Popup";
-import { useAuth0 } from "@auth0/nextjs-auth0";
+import { useAuth0 } from '@auth0/nextjs-auth0';
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
@@ -36,7 +36,7 @@ export default function page() {
     }
 
     get_location();
-    if (orders) {
+    if (orders && location.latitude && location.longitude) {
       sort_by_distance();
     }
   }, [orders]);

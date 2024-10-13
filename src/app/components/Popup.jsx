@@ -37,7 +37,6 @@ const Popup = () => {
 
   const [email, setEmail] = useState("");
   const { user, error, isLoading } = useUser();
-
   const handleNameChange = (event) => {
     setRestaurantName(event.target.value);
   };
@@ -71,22 +70,19 @@ const Popup = () => {
     setUberLink("");
     setOrderByTime("");
     setIsOpen(false);
+    setAddress('');
+    setTriedButton(false);
   };
 
   const handleCreateOrder = async () => {
-    if (user) {
-      // console.log(user.email);
+    if(user){
+      console.log(user.email);
+      console.log(user.name);
+      console.log(placeName);
       const arr = [];
       arr.push(user.email);
-      const group_id = await createPost({
-        author: user.name,
-        restaurant: restaurantName,
-        pickup_address: address,
-        pickup_lat: coordinates.lat,
-        pickup_long: coordinates.lng,
-        order_time: orderByTime,
-      });
-      await addEmail({ order_id: group_id, user_email: user.email });
+      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: orderByTime, uber_link: uberLink, pickup_location: placeName});
+      await addEmail({order_id : group_id, user_email : user.email});
     }
   };
 
@@ -191,11 +187,11 @@ const Popup = () => {
               </button>
 
               {/* Display coordinates once selected */}
-              {coordinates.lat && coordinates.lng && (
+              {/* {coordinates.lat && coordinates.lng && (
                 <div>
                   Latitude: {coordinates.lat}, Longitude: {coordinates.lng}
                 </div>
-              )}
+              )} */}
             </div>
             <button onClick={closePopup}>Close Popup</button>
           </div>
