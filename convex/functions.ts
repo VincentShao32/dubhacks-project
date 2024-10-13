@@ -82,6 +82,15 @@ export const addUserToGroupOrder = mutation({
     const order = await ctx.db.get(args.order_id);
     if (order) {
       const current_emails: string[] = order["emails"];
+      let contains = false;
+      current_emails.forEach((email: string) => {
+        if (email === args.user_email) {
+          contains = true;
+        }
+      });
+      if (contains) {
+        return;
+      }
       current_emails.push(args.user_email);
       await ctx.db.patch(args.order_id, { emails: current_emails });
     }
