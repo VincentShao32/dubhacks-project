@@ -95,11 +95,11 @@ const Popup = () => {
       />
       <button
         onClick={handleOpenGroupWindowCreate}
-        className="fixed right-24 bottom-24 z-20 bg-red text-white font-[family-name:var(--font-satoshi-medium)] px-8 py-4 text-xl rounded-xl"
+        className="fixed right-24 bottom-24 z-20 bg-black text-white font-[family-name:var(--font-satoshi-medium)] px-8 py-4 text-xl rounded-xl"
       >
         Create Group Order
       </button>
-      <div className="select-none fixed z-10 right-[85px] bottom-[85px] border-[3px] border-red rounded-xl text-white px-8 py-4 text-xl">
+      <div className="select-none fixed z-10 bg-white right-[85px] bottom-[85px] border-[3px] border-black rounded-xl text-white px-8 py-4 text-xl">
         Create Group Order
       </div>
       {isOpen && (
