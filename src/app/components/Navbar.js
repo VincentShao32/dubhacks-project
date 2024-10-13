@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import ProfileSVG from "../../graphics/account_circle.svg";
+import Logo from "../../graphics/logo.png";
 import { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Image from "next/image";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -15,9 +16,16 @@ const Navbar = () => {
         <Link href="/orders" className="text-lg ">
           list view
         </Link>
-        <Link href="/" className="text-4xl">
+        {/* <Link href="/" className="text-4xl">
           BiteShare
+        </Link> */}
+        <Link href="/">
+          <Image
+            src={Logo}
+            className="object-contain max-h-[50px] max-w-[50px]"
+          />
         </Link>
+
         <Link href="/map" className="text-lg ">
           map view
         </Link>
