@@ -146,7 +146,7 @@ export default function page() {
           Submit
         </button>
       </form>     
-      <OrderListing
+      {/* <OrderListing
         order={{
           restaurant: "Chipotle",
           pickup_location: "@ Madrona Hall",
@@ -200,7 +200,7 @@ export default function page() {
           distance: "0.7 mi",
         }}
         color = { getRandomColor() }
-      />
+      /> */}
       {orders && orders.map((order) => <OrderListingLink order={order} />)}
 
       <Popup></Popup>
