@@ -1,6 +1,6 @@
 const OrderListing = ({ order, color }) => {
   return (
-    <div className={` bg-yellow rounded-lg w-full flex justify-between p-6`}>
+    <div className={` ${color} rounded-lg w-full flex justify-between p-6`}>
       <div className="flex flex-col w-[50%] justify-between">
         <div className="flex justify-between w-full">
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-2xl">

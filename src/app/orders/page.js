@@ -7,11 +7,21 @@ import OrderListing from "../components/OrderListing";
 import { useEffect, useState } from "react";
 import PlacesSearch from "../components/placesSearch";
 import Popup from "../components/Popup";
+import { getServerActionDispatcher } from "next/dist/client/components/app-router";
 
 export default function page() {
   const [location, setLocation] = useState(null);
   const [restaurant, setRestaurant] = useState("All Restaurants");
   const [distance, setDistance] = useState(1);
+  const colors = [
+    'bg-light-red',
+    'bg-light-green',
+    'bg-yellow',
+    'bg-light-blue',
+    'bg-light-purple',
+    "bg-dark-pink"
+  ];
+  let i = -1
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -34,6 +44,18 @@ export default function page() {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log("submitted");
+  }
+
+  const getRandomColor = () => {
+    //const randomIndex = Math.floor(Math.random() * colors.length);
+    //return colors[randomIndex]; 
+    i++;
+    if (i == 5)
+    {
+      i = 0;
+    }
+    return colors[i];
+
   }
 
   return (
@@ -75,55 +97,61 @@ export default function page() {
           Submit
         </button>
       </form>
+      
       <OrderListing
         order={{
-          restaurant: "Restaurant # 1",
+          restaurant: "Chipotle",
           pickup_location: "@ Madrona Hall",
-          time: "7:20",
+          time: "9:20",
           author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
+          joined: "5",
+          distance: "0.1 mi",
         }}
+        color = { getRandomColor() }
       />
       <OrderListing
         order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
+          restaurant: "Aladdin's",
+          pickup_location: "@ Willow Hall",
+          time: "10:00",
+          author: "Vincent Shao",
           joined: "4",
-          distance: "0.3 mi",
+          distance: "0.2 mi",
         }}
+        color = { getRandomColor() }
       />
       <OrderListing
         order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
-          joined: "4",
+          restaurant: "BB's Teriyaki",
+          pickup_location: "@ Oak Hall",
+          time: "10:20",
+          author: "Spencer Morga",
+          joined: "2",
           distance: "0.3 mi",
         }}
+        color = { getRandomColor() }
       />
       <OrderListing
         order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
-          author: "Yanda Bao",
+          restaurant: "Panera Bread",
+          pickup_location: "@ Lander Hall",
+          time: "11:20",
+          author: "Vanessa Ping",
           joined: "4",
-          distance: "0.3 mi",
+          distance: "0.6 mi",
         }}
+        color = { getRandomColor() }
       />
       <OrderListing
         order={{
-          restaurant: "Restaurant # 1",
-          pickup_location: "@ Madrona Hall",
-          time: "7:20",
+          restaurant: "Starbucks",
+          pickup_location: "@ Alder Hall",
+          time: "12:00",
           author: "Yanda Bao",
-          joined: "4",
-          distance: "0.3 mi",
+          joined: "2",
+          distance: "0.7 mi",
         }}
+        color = { getRandomColor() }
       />
 
       <PlacesSearch></PlacesSearch>
