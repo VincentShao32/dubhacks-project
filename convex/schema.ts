@@ -14,13 +14,23 @@ export default defineSchema({
     emails : v.array(v.string())
   }),
 
-//   users: defineTable({
-//     name: v.string(),
-//     email: v.string(),
-//   }),
+  User: defineTable({
+    name: v.string(),
+  }),
 
-//   likes: defineTable({
-//     liker: v.string(),
-//     messageID: v.string(),
-//   }).index("byMessageID", ["messageID"]),
+  Messages: defineTable({
+    author: v.string(),
+    body: v.string(),
+    group_order_id: v.id("GroupOrder"),
+  }),
+
+  //   users: defineTable({
+  //     name: v.string(),
+  //     email: v.string(),
+  //   }),
+
+  //   likes: defineTable({
+  //     liker: v.string(),
+  //     messageID: v.string(),
+  //   }).index("byMessageID", ["messageID"]),
 });
