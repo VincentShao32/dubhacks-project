@@ -104,7 +104,7 @@ export default function page() {
       <h2 className="text-1xl font-[family-name:var(--font-satoshi-variable)] text-red">
         *Only showing groups ordering within 6 hours
       </h2>
-      <form className="flex justify-between items-center gap-4">
+      {/* <form className="flex justify-between items-center gap-4">
         <div
           className="bg-gray-100  rounded-xl h-10 flex items-center p-6 gap-2"
           onSubmit={handleSubmit}
@@ -136,62 +136,7 @@ export default function page() {
         <button className="bg-red text-white p-2 rounded-xl font-[family-name:var(--font-satoshi-variable)]">
           Submit
         </button>
-      </form>
-      {/* <OrderListingLink
-        order={{
-          restaurant: "Chipotle",
-          pickup_location: "@ Madrona Hall",
-          time: "9:20",
-          author: "Yanda Bao",
-          joined: "5",
-          distance: "0.1 mi",
-        }}
-        color={getRandomColor()}
-      /> */}
-      {/* <OrderListingLink
-        order={{
-          restaurant: "Aladdin's",
-          pickup_location: "@ Willow Hall",
-          time: "10:00",
-          author: "Vincent Shao",
-          joined: "4",
-          distance: "0.2 mi",
-        }}
-        color={getRandomColor()}
-      />
-      <OrderListingLink
-        order={{
-          restaurant: "BB's Teriyaki",
-          pickup_location: "@ Oak Hall",
-          time: "10:20",
-          author: "Spencer Morga",
-          joined: "2",
-          distance: "0.3 mi",
-        }}
-        color={getRandomColor()}
-      />
-      <OrderListingLink
-        order={{
-          restaurant: "Panera Bread",
-          pickup_location: "@ Lander Hall",
-          time: "11:20",
-          author: "Vanessa Ping",
-          joined: "4",
-          distance: "0.6 mi",
-        }}
-        color={getRandomColor()}
-      />
-      <OrderListingLink
-        order={{
-          restaurant: "Starbucks",
-          pickup_location: "@ Alder Hall",
-          time: "12:00",
-          author: "Yanda Bao",
-          joined: "2",
-          distance: "0.7 mi",
-        }}
-        color={getRandomColor()}
-      /> */}
+      </form> */}
 
       {orders &&
         location.latitude &&
