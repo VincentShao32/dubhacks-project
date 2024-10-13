@@ -30,10 +30,10 @@ export const listGroupOrders = query({
   });
   
   export const createGroupOrder = mutation({
-    args: { author: v.string(), order_time: v.string(), restaurant: v.string(), restaurant_address: v.string(), pickup_location : v.string(), pickup_address : v.string()},
-    handler: async (ctx, { author, order_time, restaurant, restaurant_address, pickup_location, pickup_address }) => {
+    args: { author: v.string(), order_time: v.string(), restaurant: v.string(), restaurant_address: v.string(), pickup_location : v.string(), pickup_address : v.string(), pickup_lat : v.number(), pickup_long : v.number()},
+    handler: async (ctx, { author, order_time, restaurant, restaurant_address, pickup_location, pickup_address, pickup_lat, pickup_long }) => {
       let emails: string[] = []; //TODO: add email of the creator to the array of emails
-      await ctx.db.insert("GroupOrder", { author, restaurant, pickup_location, pickup_address, restaurant_address, order_time, emails });
+      await ctx.db.insert("GroupOrder", { author, restaurant, pickup_location, pickup_address, pickup_lat, pickup_long, restaurant_address, order_time, emails });
     },
   });
 
@@ -56,7 +56,22 @@ export const listGroupOrders = query({
       }
     }
   })
-  
+
+
+  export const sortGroupOrdersByLocation = query({
+    args: {lat : v.float64(), long : v.float64()},
+    handler : async (ctx, args) => {
+      const orders = await ctx.db.query("GroupOrder").collect();
+      const sortedOrders = orders.sort((a, b) => getDist(a.pickup_lat, a.pickup_long, args.lat, args.long) - getDist(b.pickup_lat, b.pickup_long, args.lat, args.long));
+      return sortedOrders;
+      // const dist : number = getDist(lat, long);
+    }
+  })
+
+  const getDist = (lat : number, long : number, lat2 : number, long2 : number) => {
+    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2, 2));
+  }
+
   // export const like = mutation({
   //   args: {liker: v.string(), messageID: v.string()},
   //   handler: async (ctx, args) => {
