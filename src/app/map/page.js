@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import PlacesSearch from "../components/PlacesSearch";
 import Head from "next/head";
 import Popup from "../components/Popup";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 import {
   APIProvider,
@@ -15,7 +17,28 @@ import { jsonToConvex } from "convex/values";
 
 export default function Intro() {
   // const position = { lat: 53.54, lng: 10 };
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState([]);
+
+  const orders = useQuery(api.functions.listGroupOrders);
+
+  useEffect(() => {
+    const arr = [];
+    console.log("Created open");
+    if(orders){
+      for(let i = 0; i < orders.length; i++){
+        arr.push(false);
+      }
+    }
+    setOpen(arr);
+  }, [orders])
+
+  function handleClick(bool, index) {
+    console.log(open.length);
+    console.log(index);
+    const arr = Array.from(open);
+    arr[index] = bool;
+    setOpen(arr);
+  }
 
   // let json = JSON.stringify({ lat: 53.54, lng: 10 });
   const [lat, setLat] = useState(53.54);
@@ -41,21 +64,33 @@ export default function Intro() {
   return (
     <div>
       <Popup />
-      <APIProvider apiKey={"AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg"}>
+      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
         <div style={{ height: "93vh", width: "100 %", marginTop: "7vh" }}>
-          <Map zoom={16} center={{lat: lat, lng: lng}} mapId={"91e103c00ac4e104"}>
-            <AdvancedMarker
-              position={{lat: lat, lng: lng}}
-              onClick={() => setOpen(true)}
+          <Map zoom={15} center={{lat: lat, lng: lng}} mapId={"91e103c00ac4e104"}>
+            {orders && orders.map((item, index) => (
+              <>
+              <AdvancedMarker
+              position={{lat: item.pickup_lat, lng: item.pickup_long}}
+              onClick={() => handleClick(true, index)}
             ></AdvancedMarker>
-            {open && (
+            {open[index] && (
               <InfoWindow
-                position={position}
-                onCloseClick={() => setOpen(false)}
+                position={{lat: item.pickup_lat, lng: item.pickup_long}}
+                onCloseClick={() => handleClick(false, index)}
               >
-                <p>I'm in Hamburg! WOOHOO</p>
+                <p>
+                  {item.restaurant}
+                </p>
+                <p>
+                  {"Pickup at: " + item.pickup_location}
+                  </p>
+                  <p>
+                    {"Order before: " + new Date(item.order_time).getHours().toString().padStart(2, '0') + ":" + new Date(item.order_time).getMinutes().toString().padStart(2, '0') + (new Date(item.order_time).getHours() < 12 ? " AM" : " PM")}
+                  </p>
               </InfoWindow>
             )}
+              </>
+            ))}
           </Map>
         </div>
         {/* <PlacesSearch></PlacesSearch> */}
