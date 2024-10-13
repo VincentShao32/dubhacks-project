@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import PlacesSearch from "./PlacesSearch";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -94,22 +93,7 @@ const Popup = () => {
     setUberLink("");
     setOrderByTime("");
     setIsOpen(false);
-    setAddress('');
-  };
-
-  const handleCreateOrder = async () => {
-    if(user){
-      console.log(user.email);
-      console.log(user.name);
-      console.log(placeName);
-      const arr = [];
-      arr.push(user.email);
-      const timeInMsSinceEpoch = new Date(orderByTime).getTime();
-      console.log(timeInMsSinceEpoch);
-      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: timeInMsSinceEpoch, uber_link: uberLink, pickup_location: placeName});
-      await addEmail({order_id : group_id, user_email : user.email});
-      closePopup();
-    }
+    setAddress("");
   };
 
   return (
@@ -122,17 +106,17 @@ const Popup = () => {
       />
       <button
         onClick={handleOpenGroupWindowCreate}
-        className="fixed right-24 bottom-24 z-20 bg-black text-white font-[family-name:var(--font-satoshi-medium)] px-8 py-4 text-xl rounded-xl"
+        className="fixed right-24 bottom-24 z-20 bg-red text-white font-[family-name:var(--font-satoshi-medium)] px-8 py-4 text-xl rounded-xl"
       >
         Create Group Order
       </button>
-      <div className="select-none fixed z-10 bg-white right-[85px] bottom-[85px] border-[3px] border-black rounded-xl text-white px-8 py-4 text-xl">
+      <div className="select-none fixed z-10 bg-white right-[85px] bottom-[85px] border-[3px] border-red rounded-xl text-white px-8 py-4 text-xl">
         Create Group Order
       </div>
       {isOpen && (
         <div className="popup-overlay fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white  rounded-xl shadow-lg max-w-[450px] w-full flex flex-col ">
-            <div className="rounded-t-xl text-white font-[family-name:var(--font-satoshi-variable)] bg-black p-6">
+            <div className="rounded-t-xl text-white font-[family-name:var(--font-satoshi-variable)] bg-red p-6">
               <h1 className="text-4xl pl-2">New Datch Order</h1>
             </div>
             <form
@@ -166,7 +150,7 @@ const Popup = () => {
                   Order Time
                 </label>
                 <input
-                type="datetime-local"
+                  type="datetime-local"
                   value={orderByTime}
                   onChange={handleTimeChange}
                   placeholder="Enter time"
@@ -226,13 +210,22 @@ const Popup = () => {
               )}
               <button
                 disabled={
-                  !(address && restaurantName && orderByTime && uberLink && user) || (new Date(orderByTime).getTime() < Date.now())
+                  !(
+                    address &&
+                    restaurantName &&
+                    orderByTime &&
+                    uberLink &&
+                    user
+                  ) || new Date(orderByTime).getTime() < Date.now()
                 }
                 className="w-full font-[family-name:var(--font-satoshi-variable)] bg-red p-2 text-white rounded-xl mt-4"
               >
-                {!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : (new Date(orderByTime).getTime() < Date.now()) ? "Enter a valid time" : "Create Group Order"}
-      {/* <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user) || (new Date(orderByTime).getTime() < Date.now())}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : (new Date(orderByTime).getTime() < Date.now()) ? "Enter a valid time" : "Create Group Order"}</button> */}
-
+                {!(address && restaurantName && orderByTime && uberLink && user)
+                  ? "Fill out all information!"
+                  : new Date(orderByTime).getTime() < Date.now()
+                    ? "Enter a valid time"
+                    : "Create Group Order"}
+                {/* <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user) || (new Date(orderByTime).getTime() < Date.now())}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : (new Date(orderByTime).getTime() < Date.now()) ? "Enter a valid time" : "Create Group Order"}</button> */}
               </button>
               <button
                 onClick={closePopup}

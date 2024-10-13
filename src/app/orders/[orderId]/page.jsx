@@ -20,11 +20,31 @@ const page = ({ params }) => {
 
   const { user, error, isLoading } = useUser();
 
+  const colors = [
+    "bg-light-red",
+    "bg-light-green",
+    "bg-yellow",
+    "bg-light-blue",
+    "bg-light-purple",
+    "bg-dark-pink",
+  ];
+  let i = -1;
+
   const [newMessageText, setNewMessageText] = useState("");
+
+  const getRandomColor = () => {
+    //const randomIndex = Math.floor(Math.random() * colors.length);
+    //return colors[randomIndex];
+    i++;
+    if (i == 5) {
+      i = 0;
+    }
+    return colors[i];
+  };
 
   return (
     <div className="mt-24 max-w-[800px] w-full mx-auto flex flex-col gap-4">
-      {order && <OrderListing order={order} />}
+      {order && <OrderListing order={order} color={getRandomColor()} />}
       <div className="flex justify-between border-4 w-full border-red rounded-xl items-center">
         <button
           onClick={() => {

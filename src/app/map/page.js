@@ -1,7 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import PlacesSearch from "../components/PlacesSearch";
-import Head from "next/head";
 import Popup from "../components/Popup";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -42,14 +40,14 @@ export default function Intro() {
 
   // let json = JSON.stringify({ lat: 53.54, lng: 10 });
   const [lat, setLat] = useState(53.54);
-  const[lng, setLng] = useState(10);
+  const [lng, setLng] = useState(10);
   // const [location, setLocation] = useState({lat:53.54, lng:10});
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLat( position.coords.latitude);
+          setLat(position.coords.latitude);
           setLng(position.coords.longitude);
         },
         (error) => {
