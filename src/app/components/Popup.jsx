@@ -166,6 +166,7 @@ const Popup = () => {
                   Order Time
                 </label>
                 <input
+                type="datetime-local"
                   value={orderByTime}
                   onChange={handleTimeChange}
                   placeholder="Enter time"
