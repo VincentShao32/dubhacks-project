@@ -10,7 +10,7 @@ const Navbar = () => {
   const { user, error, isLoading } = useUser();
 
   return (
-    <div className="absolute top-0 w-full bg-red text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
+    <div className="absolute top-0 z-10 w-full bg-red text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
       <div className="flex mx-auto w-fit items-center gap-16">
         <Link href="/orders" className="text-lg ">
           list view

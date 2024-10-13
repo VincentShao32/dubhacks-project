@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Popup = () => {
   let a = 5;
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +14,15 @@ const Popup = () => {
 
   return (
     <div>
-      <button onClick={handleOpenGroupWindowCreate}>Create Group Order</button>
+      <button
+        onClick={handleOpenGroupWindowCreate}
+        className="fixed right-24 bottom-24 z-20 bg-red text-white font-[family-name:var(--font-satoshi-medium)] px-8 py-4 text-xl rounded-xl"
+      >
+        Create Group Order
+      </button>
+      <div className="select-none fixed z-10 right-[85px] bottom-[85px] border-[3px] border-red rounded-xl text-white px-8 py-4 text-xl">
+        Create Group Order
+      </div>
       {isOpen && (
         <div className="popup-overlay">
           <div className="popup-content">

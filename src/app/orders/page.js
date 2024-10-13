@@ -6,6 +6,7 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import OrderListing from "../components/OrderListing";
 import { useEffect, useState } from "react";
 import PlacesSearch from "../components/placesSearch";
+import Popup from "../components/Popup";
 
 export default function page() {
   const [location, setLocation] = useState(null);
@@ -37,6 +38,7 @@ export default function page() {
 
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
+      <Popup />
       <h1 className="text-3xl font-[family-name:var(--font-satoshi-variable)] text-red">
         Current Group Orders
       </h1>

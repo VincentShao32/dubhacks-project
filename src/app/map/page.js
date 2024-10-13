@@ -2,6 +2,7 @@
 import { useState } from "react";
 import PlacesSearch from "../components/placesSearch";
 import Head from "next/head";
+import Popup from "../components/Popup";
 
 import {
   APIProvider,
@@ -17,6 +18,7 @@ export default function Intro() {
 
   return (
     <div>
+      <Popup />
       <APIProvider apiKey={"AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg"}>
         <div style={{ height: "93vh", width: "100 %", marginTop: "7vh" }}>
           <Map zoom={9} center={position} mapId={"91e103c00ac4e104"}>
@@ -25,7 +27,10 @@ export default function Intro() {
               onClick={() => setOpen(true)}
             ></AdvancedMarker>
             {open && (
-              <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
+              <InfoWindow
+                position={position}
+                onCloseClick={() => setOpen(false)}
+              >
                 <p>I'm in Hamburg! WOOHOO</p>
               </InfoWindow>
             )}
