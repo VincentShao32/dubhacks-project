@@ -15,6 +15,7 @@ export default function page() {
 
   let orders = useQuery(api.functions.listGroupOrders);
   const createOrder = useMutation(api.GroupOrderFunctions.createGroupOrder);
+  const deleteOldOrders = useMutation(api.functions.deleteOldGroupOrders);
 
   useEffect(() => {
     function get_location() {
@@ -34,6 +35,8 @@ export default function page() {
         console.error("Geolocation is not supported by this browser.");
       }
     }
+
+    deleteOldOrders();
 
     get_location();
     if (orders && location.latitude && location.longitude) {

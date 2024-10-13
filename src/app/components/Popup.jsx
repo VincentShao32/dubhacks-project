@@ -71,7 +71,6 @@ const Popup = () => {
     setOrderByTime("");
     setIsOpen(false);
     setAddress('');
-    setTriedButton(false);
   };
 
   const handleCreateOrder = async () => {
@@ -83,6 +82,7 @@ const Popup = () => {
       arr.push(user.email);
       const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: orderByTime, uber_link: uberLink, pickup_location: placeName});
       await addEmail({order_id : group_id, user_email : user.email});
+      closePopup();
     }
   };
 

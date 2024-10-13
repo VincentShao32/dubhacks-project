@@ -9,7 +9,7 @@ export default defineSchema({
     pickup_lat: v.number(),
     pickup_long: v.number(),
     uber_link: v.string(),
-    order_time: v.string(),
+    order_time: v.number(),
     emails: v.array(v.string()),
     pickup_location: v.string()
   }),
