@@ -64,26 +64,36 @@ const Popup = () => {
     setIsScriptLoaded(true);
   };
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (user) {
+      console.log(user.email);
+      console.log(user.name);
+      console.log(placeName);
+      const arr = [];
+      arr.push(user.email);
+      const group_id = await createPost({
+        author: user.name,
+        restaurant: restaurantName,
+        pickup_address: address,
+        pickup_lat: coordinates.lat,
+        pickup_long: coordinates.lng,
+        order_time: orderByTime,
+        uber_link: uberLink,
+        pickup_location: placeName,
+      });
+      await addEmail({ order_id: group_id, user_email: user.email });
+    }
+    closePopup();
+  }
+
   // Function to close the popup
   const closePopup = () => {
     setRestaurantName("");
     setUberLink("");
     setOrderByTime("");
     setIsOpen(false);
-    setAddress('');
-    setTriedButton(false);
-  };
-
-  const handleCreateOrder = async () => {
-    if(user){
-      console.log(user.email);
-      console.log(user.name);
-      console.log(placeName);
-      const arr = [];
-      arr.push(user.email);
-      const group_id = await createPost({author: user.name, restaurant: restaurantName, pickup_address : address, pickup_lat: coordinates.lat, pickup_long: coordinates.lng, order_time: orderByTime, uber_link: uberLink, pickup_location: placeName});
-      await addEmail({order_id : group_id, user_email : user.email});
-    }
+    setAddress("");
   };
 
   return (
@@ -104,36 +114,47 @@ const Popup = () => {
       </div>
       {isOpen && (
         <div className="popup-overlay fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-          <div className="popup-content bg-white p-6 rounded-lg shadow-lg w-1/2 h-3/4">
-            <h1 className="">Start a Datch Order!</h1>
-            <p>
-              First, start a group order on Uber Eats grab the link you're
-              given. Then, enter the restaurant, link, and when you want to
-              close and place your group order! After creating the listing, you
-              will be placed into a group chat with others in your Datch order,
-              where you can communicate and remind them to finalize their
-              orders.
-            </p>
-            <p>
-              <input
-                value={restaurantName}
-                onChange={handleNameChange}
-                placeholder="Restaurant... ex. Chipotle"
-              ></input>
-              <input
-                value={uberLink}
-                onChange={handleLinkChange}
-                placeholder="Link to Uber Eats group order"
-              ></input>
-              <input
-                value={orderByTime}
-                onChange={handleTimeChange}
-                className=""
-                placeholder="Place order by... ex. 5:00 PM"
-              ></input>
-            </p>
-            <div>
-              {/* Conditionally render PlacesAutocomplete only after script is loaded */}
+          <div className="bg-white  rounded-xl shadow-lg max-w-[450px] w-full flex flex-col ">
+            <div className="rounded-t-xl text-white font-[family-name:var(--font-satoshi-variable)] bg-black p-6">
+              <h1 className="text-4xl pl-2">New Datch Order</h1>
+            </div>
+            <form
+              className="flex flex-col gap-4 px-8 pb-8 pt-4"
+              onSubmit={handleSubmit}
+            >
+              <div className="flex flex-col gap-2">
+                <label className="text-red font-[family-name:var(--font-satoshi-variable)] text-lg">
+                  Restaurant Name
+                </label>
+                <input
+                  value={restaurantName}
+                  onChange={handleNameChange}
+                  placeholder="Enter name"
+                  className="bg-gray-100 rounded-t-xl p-2 border-b-2 border-b-black"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-red font-[family-name:var(--font-satoshi-variable)] text-lg">
+                  Group Order Link
+                </label>
+                <input
+                  value={uberLink}
+                  onChange={handleLinkChange}
+                  placeholder="Enter link"
+                  className="bg-gray-100 rounded-t-xl p-2 border-b-2 border-b-black"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-red font-[family-name:var(--font-satoshi-variable)] text-lg">
+                  Order Time
+                </label>
+                <input
+                  value={orderByTime}
+                  onChange={handleTimeChange}
+                  placeholder="Enter time"
+                  className="bg-gray-100 rounded-t-xl p-2 border-b-2 border-b-black"
+                ></input>
+              </div>
               {isScriptLoaded ? (
                 <PlacesAutocomplete
                   value={address}
@@ -147,10 +168,14 @@ const Popup = () => {
                     loading,
                   }) => (
                     <div>
+                      <label className="text-red font-[family-name:var(--font-satoshi-variable)] text-lg">
+                        Address Search
+                      </label>
                       <input
                         {...getInputProps({
                           placeholder: "Search Places ...",
-                          className: "location-search-input",
+                          className:
+                            "location-search-input rounded-t-xl bg-gray-100 w-full p-2 border-b-black border-b-2",
                         })}
                       />
                       <div className="autocomplete-dropdown-container">
@@ -166,7 +191,7 @@ const Popup = () => {
                           return (
                             <div
                               {...getSuggestionItemProps(suggestion, {
-                                className,
+                                className: "",
                                 style,
                               })}
                             >
@@ -181,17 +206,29 @@ const Popup = () => {
               ) : (
                 <p>Loading Google Maps...</p>
               )}
-              {/* <button onClick={handleCreateOrder} disabled={restaurantName == "" || orderByTime == "" || uberLink == ""}>Create Group Order</button> */}
-              <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user)}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : "Create Group Order"}</button>
-
-              {/* Display coordinates once selected */}
-              {/* {coordinates.lat && coordinates.lng && (
-                <div>
-                  Latitude: {coordinates.lat}, Longitude: {coordinates.lng}
-                </div>
-              )} */}
-            </div>
-            <button onClick={closePopup}>Close Popup</button>
+              <button
+                disabled={
+                  !(
+                    address &&
+                    restaurantName &&
+                    orderByTime &&
+                    uberLink &&
+                    user
+                  )
+                }
+                className="w-full font-[family-name:var(--font-satoshi-variable)] bg-red p-2 text-white rounded-xl mt-4"
+              >
+                {!(address && restaurantName && orderByTime && uberLink && user)
+                  ? "Fill out all information!"
+                  : "Create Group Order"}
+              </button>
+              <button
+                onClick={closePopup}
+                className='"w-full font-[family-name:var(--font-satoshi-variable)] bg-red p-2 text-white rounded-xl mt-4"'
+              >
+                Cancel
+              </button>
+            </form>
           </div>
         </div>
       )}
