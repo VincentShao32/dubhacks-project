@@ -8,12 +8,9 @@ export default defineSchema({
     pickup_location: v.string(),
     pickup_address: v.string(),
     restaurant_address: v.string(),
-    order_time: v.string()
+    order_time: v.string(),
+    emails : v.array(v.string())
   }),
-
-  User: defineTable({
-    name: v.string()
-  })
 
 //   users: defineTable({
 //     name: v.string(),

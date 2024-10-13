@@ -1,3 +1,4 @@
+import { UNSTABLE_REVALIDATE_RENAME_ERROR } from "next/dist/lib/constants";
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 // import { Id } from "./_generated/dataModel";
@@ -31,7 +32,8 @@ export const listGroupOrders = query({
   export const createGroupOrder = mutation({
     args: { author: v.string(), order_time: v.string(), restaurant: v.string(), restaurant_address: v.string(), pickup_location : v.string(), pickup_address : v.string()},
     handler: async (ctx, { author, order_time, restaurant, restaurant_address, pickup_location, pickup_address }) => {
-      await ctx.db.insert("GroupOrder", { author, restaurant, pickup_location, pickup_address, restaurant_address, order_time });
+      let emails: string[] = []; //TODO: add email of the creator to the array of emails
+      await ctx.db.insert("GroupOrder", { author, restaurant, pickup_location, pickup_address, restaurant_address, order_time, emails });
     },
   });
 
@@ -40,6 +42,18 @@ export const listGroupOrders = query({
     handler: async (ctx, args) => {
       const groupOrder = await ctx.db.get(args.id);
       return groupOrder || null;
+    }
+  })
+
+  export const addUserToGroupOrder = mutation({
+    args: {order_id : v.id("GroupOrder"), user_email : v.string()},
+    handler: async (ctx, args) => {
+      const order = await ctx.db.get(args.order_id);
+      if(order){
+        const current_emails : string[] = order["emails"];
+        current_emails.push(args.user_email);
+        await ctx.db.patch(args.order_id, {emails: current_emails})
+      }
     }
   })
   
