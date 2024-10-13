@@ -21,6 +21,9 @@ const OrderListing = ({ order, color }) => {
             {`${order.emails.length - 1} others have joined`}
           </h1>
         </div>
+        <h1 className="font-family-name:var(--font-satoshi-medium)] italic pt-2">
+          {order.pickup_address}
+        </h1>
       </div>
       <div className="flex flex-col items-center">
         <h1 className="font-[family-name:var(--font-satoshi-medium)] text-right">
@@ -30,7 +33,6 @@ const OrderListing = ({ order, color }) => {
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl">
             {order.order_time}
           </h1>
-          <p className="font-[family-name:var(--font-satoshi-medium)]">pm</p>
         </div>
         <div className="p-1"></div>
       </div>

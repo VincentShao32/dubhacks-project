@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const OrderListingLink = ({ order, color }) => {
+const OrderListingLink = ({ order }) => {
   return (
     <Link
       href={`orders/${order._id}`}
@@ -35,7 +35,6 @@ const OrderListingLink = ({ order, color }) => {
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl">
             {order.order_time}
           </h1>
-          <p className="font-[family-name:var(--font-satoshi-medium)]">pm</p>
         </div>
         <div className="p-1"></div>
       </div>
