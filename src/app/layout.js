@@ -22,12 +22,27 @@ const satoshiVariable = localFont({
   variable: "--font-satoshi-variable",
 });
 
+const satoshiLight = localFont({
+  src: "./fonts/Satoshi-Light.woff",
+  variable: "--font-satoshi-light",
+});
+
+const satoshiLightItalic = localFont({
+  src: "./fonts/Satoshi-LightItalic.woff",
+  variable: "--font-satoshi-light-italic",
+});
+
+const satoshiMedium = localFont({
+  src: "./fonts/Satoshi-Medium.woff",
+  variable: "--font-satoshi-medium",
+});
+
 export default function RootLayout({ children }) {
   return (
     <UserProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${satoshiVariable.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${satoshiVariable.variable} ${satoshiLight.variable} ${satoshiLightItalic.variable} ${satoshiMedium.variable} antialiased`}
         >
           <Navbar></Navbar>
           <header>

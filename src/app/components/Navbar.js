@@ -1,14 +1,11 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import ProfileSVG from "../../graphics/account_circle.svg";
 
 const Navbar = () => {
-  const { user, error, isLoading } = useUser();
-
   return (
-    <div className="fixed w-full bg-red text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
+    <div className="absolute top-0 w-full bg-red text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
       <div className="flex mx-auto w-fit items-center gap-16">
         <Link href="/orders" className="text-lg ">
           list view
@@ -18,6 +15,7 @@ const Navbar = () => {
           map view
         </Link>
       </div>
+
       <svg
         width="49"
         height="49"
