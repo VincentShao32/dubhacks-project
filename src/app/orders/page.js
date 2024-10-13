@@ -48,9 +48,9 @@ export default function page() {
     }
 
     get_location();
-    
+
     console.log(Date.now());
-    deleteOldOrders({current_time : Date.now()});
+    deleteOldOrders({ current_time: Date.now() });
 
     if (orders && location && location.latitude && location.longitude) {
       sort_by_distance();
@@ -94,10 +94,6 @@ export default function page() {
       i = 0;
     }
     return colors[i];
-  };
-
-  const getDistance = (lat, long, lat2, long2) => {
-    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2));
   };
 
   return (

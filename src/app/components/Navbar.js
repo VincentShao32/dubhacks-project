@@ -10,12 +10,14 @@ const Navbar = () => {
   const { user, error, isLoading } = useUser();
 
   return (
-    <div className="absolute top-0 z-10 w-full bg-black text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
+    <div className="absolute top-0 z-10 w-full bg-red text-white p-4 justify-between items-center font-[family-name:var(--font-satoshi-variable)]">
       <div className="flex mx-auto w-fit items-center gap-16">
         <Link href="/orders" className="text-lg ">
           list view
         </Link>
-        <h1 className="text-4xl">Datch</h1>
+        <Link href="/" className="text-4xl">
+          Datch
+        </Link>
         <Link href="/map" className="text-lg ">
           map view
         </Link>
@@ -48,22 +50,6 @@ const Navbar = () => {
           )}
         </div>
       )}
-
-      {/* {user ? (
-        <a
-          className="bg-red-500 p-4 text-white rounded"
-          href="/api/auth/logout"
-        >
-          Logout
-        </a>
-      ) : (
-        <Link
-          className="bg-blue-500 p-4 text-white rounded"
-          href="/api/auth/login"
-        >
-          Login
-        </Link>
-      )} */}
     </div>
   );
 };
