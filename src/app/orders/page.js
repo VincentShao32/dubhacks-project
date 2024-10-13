@@ -5,6 +5,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import OrderListing from "../components/OrderListing";
 import { useEffect, useState } from "react";
+import PlacesSearch from "../components/placesSearch";
 
 export default function page () {
   const [location, setLocation] = useState(null);
@@ -85,6 +86,8 @@ export default function page () {
           distance: "0.3 mi",
         }}
       />
+
+      <PlacesSearch></PlacesSearch>
     </div>
   );
 };

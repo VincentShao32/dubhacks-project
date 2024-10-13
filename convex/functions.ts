@@ -62,11 +62,17 @@ export const listGroupOrders = query({
 
 
   export const sortGroupOrdersByLocation = query({
-    args: {lat : v.float64(), long : v.float64()},
+    args: {lat : v.float64(), long : v.float64(), max_dist : v.number()},
     handler : async (ctx, args) => {
       const orders = await ctx.db.query("GroupOrder").collect();
       const sortedOrders = orders.sort((a, b) => getDist(a.pickup_lat, a.pickup_long, args.lat, args.long) - getDist(b.pickup_lat, b.pickup_long, args.lat, args.long));
-      return sortedOrders;
+      const filteredOrders = [];
+      for(let i = 0; i < sortedOrders.length; i++){
+        if(getDist(sortedOrders[i].pickup_lat, sortedOrders[i].pickup_long, args.lat, args.long) <= args.max_dist){
+          filteredOrders.push(sortedOrders[i]);
+        }
+      }
+      return filteredOrders;
       // const dist : number = getDist(lat, long);
     }
   })

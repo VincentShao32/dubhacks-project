@@ -15,7 +15,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as GroupOrderFunctions from "../GroupOrderFunctions.js";
+import type * as GroupOrderFunctions from "../functions.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
