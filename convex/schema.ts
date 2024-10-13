@@ -10,7 +10,7 @@ export default defineSchema({
     pickup_long: v.number(),
     uber_link: v.string(),
     order_time: v.string(),
-    emails : v.array(v.string())
+    emails: v.array(v.string()),
   }),
 
   User: defineTable({
@@ -21,6 +21,7 @@ export default defineSchema({
     author: v.string(),
     body: v.string(),
     group_order_id: v.id("GroupOrder"),
+    author_email: v.string(),
   }),
 
   //   users: defineTable({

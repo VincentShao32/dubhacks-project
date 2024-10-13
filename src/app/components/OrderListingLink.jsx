@@ -1,6 +1,11 @@
-const OrderListing = ({ order, color }) => {
+import Link from "next/link";
+
+const OrderListingLink = ({ order, color }) => {
   return (
-    <div className={` bg-yellow rounded-lg w-full flex justify-between p-6`}>
+    <Link
+      href={`orders/${order._id}`}
+      className={` bg-yellow rounded-lg w-full flex justify-between p-6`}
+    >
       <div className="flex flex-col w-[50%] justify-between">
         <div className="flex justify-between w-full">
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-2xl">
@@ -34,8 +39,8 @@ const OrderListing = ({ order, color }) => {
         </div>
         <div className="p-1"></div>
       </div>
-    </div>
+    </Link>
   );
 };
 
-export default OrderListing;
+export default OrderListingLink;

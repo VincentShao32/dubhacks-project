@@ -1,9 +1,6 @@
 "use client";
 
-import Loading from "../components/Loading";
-import ErrorMessage from "../components/ErrorMessage";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import OrderListing from "../components/OrderListing";
+import OrderListingLink from "../components/OrderListingLink";
 import { useEffect, useState } from "react";
 import PlacesSearch from "../components/PlacesSearch";
 import Popup from "../components/Popup";
@@ -14,25 +11,59 @@ export default function page() {
   const [distance, setDistance] = useState(1);
   const [location, setLocation] = useState(null);
 
+  let orders = useQuery(api.functions.listGroupOrders);
+  const createOrder = useMutation(api.GroupOrderFunctions.createGroupOrder);
+
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
+    function get_location() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
     }
-  }, []);
+
+    get_location();
+    if (orders) {
+      sort_by_distance();
+    }
+  }, [orders]);
+
+  function sort_by_distance() {
+    const sortedOrders = orders.sort(
+      (a, b) =>
+        get_dist(
+          a.pickup_lat,
+          a.pickup_long,
+          location.latitude,
+          location.longitude
+        ) -
+        get_dist(
+          b.pickup_lat,
+          b.pickup_long,
+          location.latitude,
+          location.longitude
+        )
+    );
+    orders = sortedOrders;
+  }
+
+  const get_dist = (lat, long, lat2, long2) => {
+    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2, 2));
+  };
 
   async function handleSubmit(e) {
+    console.log("submitted");
     e.preventDefault();
     console.log("submitted");
   }
@@ -43,6 +74,7 @@ export default function page() {
 
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
+      <Popup />
       <h1 className="text-3xl font-[family-name:var(--font-satoshi-variable)] text-red">
         Upcoming Datch Groups
       </h1>
@@ -79,7 +111,8 @@ export default function page() {
           Submit
         </button>
       </form>
-      <OrderListing
+      {orders && orders.map((order) => <OrderListingLink order={order} />)}
+      {/* <OrderListing
         order={{
           restaurant: "Restaurant # 1",
           pickup_location: "@ Madrona Hall",
@@ -87,6 +120,7 @@ export default function page() {
           author: "Yanda Bao",
           joined: "4",
           distance: "0.3 mi",
+
         }}
       />
       <OrderListing
@@ -128,7 +162,7 @@ export default function page() {
           joined: "4",
           distance: "0.3 mi",
         }}
-      />
+      /> */}
 
       <Popup></Popup>
     </div>
