@@ -5,11 +5,10 @@ export default defineSchema({
   GroupOrder: defineTable({
     author: v.string(),
     restaurant: v.string(),
-    pickup_location: v.string(),
     pickup_address: v.string(),
     pickup_lat: v.number(),
     pickup_long: v.number(),
-    restaurant_address: v.string(),
+    uber_link: v.string(),
     order_time: v.string(),
     emails: v.array(v.string()),
   }),
