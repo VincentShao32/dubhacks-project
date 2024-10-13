@@ -33,10 +33,11 @@ export const listGroupOrders = query({
   });
   
   export const createGroupOrder = mutation({
-    args: { author: v.string(), order_time: v.string(), restaurant: v.string(), restaurant_address: v.string(), pickup_location : v.string(), pickup_address : v.string(), pickup_lat : v.number(), pickup_long : v.number()},
-    handler: async (ctx, { author, order_time, restaurant, restaurant_address, pickup_location, pickup_address, pickup_lat, pickup_long }) => {
+    args: { author: v.string(), order_time: v.string(), restaurant: v.string(), uber_link: v.string(), pickup_location : v.string(), pickup_address : v.string(), pickup_lat : v.number(), pickup_long : v.number()},
+    handler: async (ctx, { author, order_time, restaurant, uber_link, pickup_address, pickup_lat, pickup_long }) => {
       let emails: string[] = []; //TODO: add email of the creator to the array of emails
-      await ctx.db.insert("GroupOrder", { author, restaurant, pickup_location, pickup_address, pickup_lat, pickup_long, restaurant_address, order_time, emails });
+      const new_id = await ctx.db.insert("GroupOrder", { author, restaurant, pickup_address, pickup_lat, pickup_long, uber_link, order_time, emails });
+      return new_id;
     },
   });
 
@@ -59,7 +60,6 @@ export const listGroupOrders = query({
       }
     }
   })
-
 
   export const sortGroupOrdersByLocation = query({
     args: {lat : v.float64(), long : v.float64(), max_dist : v.number()},

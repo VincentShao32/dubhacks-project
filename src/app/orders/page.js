@@ -5,12 +5,14 @@ import ErrorMessage from "../components/ErrorMessage";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import OrderListing from "../components/OrderListing";
 import { useEffect, useState } from "react";
-import PlacesSearch from "../components/placesSearch";
+import PlacesSearch from "../components/PlacesSearch";
+import Popup from "../components/Popup";
+import { useAuth0 } from '@auth0/nextjs-auth0';
 
 export default function page() {
-  const [location, setLocation] = useState(null);
   const [restaurant, setRestaurant] = useState("All Restaurants");
   const [distance, setDistance] = useState(1);
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -35,10 +37,14 @@ export default function page() {
     console.log("submitted");
   }
 
+  const getDistance = (lat, long, lat2, long2) => {
+    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2));
+  }
+
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
       <h1 className="text-3xl font-[family-name:var(--font-satoshi-variable)] text-red">
-        Current Group Orders
+        Upcoming Datch Groups
       </h1>
       <form className="flex justify-between items-center gap-4">
         <div
@@ -124,7 +130,7 @@ export default function page() {
         }}
       />
 
-      <PlacesSearch></PlacesSearch>
+      <Popup></Popup>
     </div>
   );
 }
