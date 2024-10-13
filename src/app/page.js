@@ -33,11 +33,11 @@ export default function Home() {
               <h1 className="font-[family-name:var(--font-satoshi-variable)] text-6xl text-red">
                 Expensive delivery?
               </h1>
-              <p className="font-[family-name:var(--font-satoshi-medium)] text-black text-3xl">
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
                 Craving late-night takeout, but don't want to spend fees?
                 BiteShare allows you to save by organizing group online orders.
               </p>
-              <p className="font-[family-name:var(--font-satoshi-medium)] text-black text-3xl">
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
                 Only pay for what you need.
               </p>
             </div>
