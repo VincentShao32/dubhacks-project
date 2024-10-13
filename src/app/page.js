@@ -10,7 +10,7 @@ export default function Home() {
     <div className="flex flex-col">
       <div className="min-h-screen flex font-[family-name:var(--font-satoshi-variable)]">
         <div className=" bg-white w-[34%] flex flex-col justify-center  px-[3.5rem] gap-4">
-          <h1 className="font-[family-name:var(--font-satoshi-variable)] text-[6.25rem] text-red leading-none ">
+          <h1 className="font-[family-name:var(--font-satoshi-variable)] text-[6.25rem] text-black leading-none ">
             BiteShare
           </h1>
           <h1 className=" text-4xl text-red pb-4">
@@ -33,11 +33,11 @@ export default function Home() {
               <h1 className="font-[family-name:var(--font-satoshi-variable)] text-6xl text-red">
                 Expensive delivery?
               </h1>
-              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-black text-3xl">
                 Craving late-night takeout, but don't want to spend fees?
                 BiteShare allows you to save by organizing group online orders.
               </p>
-              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-black text-3xl">
                 Only pay for what you need.
               </p>
             </div>
