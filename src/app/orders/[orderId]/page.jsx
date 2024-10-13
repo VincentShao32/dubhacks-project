@@ -134,7 +134,7 @@ const page = ({ params }) => {
           </div>
         </div>
         <div className="flex flex-col w-[65%] gap-4">
-          <div className="flex flex-col bg-gray-100 rounded-lg p-4 gap-4 h-[475px]">
+          <div className="flex flex-col bg-gray-100 rounded-lg p-4 gap-4 h-[475px] overflow-y-scroll snap-end">
             {messages &&
               user &&
               messages.map((message) => {
