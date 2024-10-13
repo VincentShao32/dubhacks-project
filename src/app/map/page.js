@@ -78,26 +78,31 @@ export default function Intro() {
                   ></AdvancedMarker>
                   {open[index] && (
                     <InfoWindow
-                      position={{ lat: item.pickup_lat, lng: item.pickup_long }}
+                      position={{
+                        lat: item.pickup_lat,
+                        lng: item.pickup_long,
+                      }}
                       onCloseClick={() => handleClick(false, index)}
                     >
-                      <p>{item.restaurant}</p>
-                      <p>{"Pickup at: " + item.pickup_location}</p>
-                      <p>
-                        {"Order before: " +
-                          new Date(item.order_time)
-                            .getHours()
-                            .toString()
-                            .padStart(2, "0") +
-                          ":" +
-                          new Date(item.order_time)
-                            .getMinutes()
-                            .toString()
-                            .padStart(2, "0") +
-                          (new Date(item.order_time).getHours() < 12
-                            ? " AM"
-                            : " PM")}
-                      </p>
+                      <a href={`orders/${item._id}`} className="z-10">
+                        <p>{item.restaurant}</p>
+                        <p>{"Pickup at: " + item.pickup_location}</p>
+                        <p>
+                          {"Order before: " +
+                            new Date(item.order_time)
+                              .getHours()
+                              .toString()
+                              .padStart(2, "0") +
+                            ":" +
+                            new Date(item.order_time)
+                              .getMinutes()
+                              .toString()
+                              .padStart(2, "0") +
+                            (new Date(item.order_time).getHours() < 12
+                              ? " AM"
+                              : " PM")}
+                        </p>
+                      </a>
                     </InfoWindow>
                   )}
                 </>
