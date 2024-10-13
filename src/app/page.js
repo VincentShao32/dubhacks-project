@@ -30,7 +30,7 @@ export default function Home() {
           <Image src={image2} />
           <div className="w-[1200px] bg-white">
             <div className="flex flex-col p-8 gap-8">
-              <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl text-red">
+              <h1 className="font-[family-name:var(--font-satoshi-variable)] text-6xl text-red">
                 Expensive delivery?
               </h1>
               <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
@@ -43,10 +43,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between pr-8 py-8">
-          <div className="w-[950px] bg-white flex items-center">
+        <div className="flex justify-between pr-8 pb-8">
+          <div className="w-[1100px] bg-white flex items-center pl-8">
             <div className="flex flex-col p-8 gap-8">
-              <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl text-red">
+              <h1 className="font-[family-name:var(--font-satoshi-variable)] text-6xl text-red">
                 Connect over your favorite foods.
               </h1>
               <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
@@ -58,7 +58,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <Image src={image3} className="object-contain h-[375px]" />
+          <Image src={image3} className="object-contain h-[380px]" />
         </div>
       </div>
     </div>
