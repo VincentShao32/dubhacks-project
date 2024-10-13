@@ -182,9 +182,7 @@ const Popup = () => {
                 <p>Loading Google Maps...</p>
               )}
               {/* <button onClick={handleCreateOrder} disabled={restaurantName == "" || orderByTime == "" || uberLink == ""}>Create Group Order</button> */}
-              <button onClick={handleCreateOrder} disabled={false}>
-                Create Group Order
-              </button>
+              <button onClick={handleCreateOrder} disabled={!(address && restaurantName && orderByTime && uberLink && user)}>{!(address && restaurantName && orderByTime && uberLink && user) ? "Fill out all information!" : "Create Group Order"}</button>
 
               {/* Display coordinates once selected */}
               {/* {coordinates.lat && coordinates.lng && (
