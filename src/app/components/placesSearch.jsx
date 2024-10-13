@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-} from 'react-places-autocomplete';
-import Script from 'next/script';
+} from "react-places-autocomplete";
+import Script from "next/script";
 
 const PlacesSearch = () => {
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
@@ -32,11 +32,11 @@ const PlacesSearch = () => {
     <>
       {/* Google Maps API Script */}
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg&libraries=places`}
-        strategy="afterInteractive"  // Load script after page becomes interactive
-        onLoad={handleScriptLoad}  // Set script loading to true after load
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+        strategy="afterInteractive" // Load script after page becomes interactive
+        onLoad={handleScriptLoad} // Set script loading to true after load
       />
-      
+
       <div>
         {/* Conditionally render PlacesAutocomplete only after script is loaded */}
         {isScriptLoaded ? (
@@ -45,23 +45,28 @@ const PlacesSearch = () => {
             onChange={handleChange}
             onSelect={handleSelect}
           >
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+            {({
+              getInputProps,
+              suggestions,
+              getSuggestionItemProps,
+              loading,
+            }) => (
               <div>
                 <input
                   {...getInputProps({
-                    placeholder: 'Search Places ...',
-                    className: 'location-search-input',
+                    placeholder: "Search Places ...",
+                    className: "location-search-input",
                   })}
                 />
                 <div className="autocomplete-dropdown-container">
                   {loading && <div>Loading...</div>}
                   {suggestions.map((suggestion) => {
                     const className = suggestion.active
-                      ? 'suggestion-item--active'
-                      : 'suggestion-item';
+                      ? "suggestion-item--active"
+                      : "suggestion-item";
                     const style = suggestion.active
-                      ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                      ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                      : { backgroundColor: "#ffffff", cursor: "pointer" };
                     return (
                       <div
                         {...getSuggestionItemProps(suggestion, {

@@ -22,13 +22,13 @@ export default function Intro() {
   useEffect(() => {
     const arr = [];
     console.log("Created open");
-    if(orders){
-      for(let i = 0; i < orders.length; i++){
+    if (orders) {
+      for (let i = 0; i < orders.length; i++) {
         arr.push(false);
       }
     }
     setOpen(arr);
-  }, [orders])
+  }, [orders]);
 
   function handleClick(bool, index) {
     console.log(open.length);
@@ -62,33 +62,46 @@ export default function Intro() {
   return (
     <div>
       <Popup />
-      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
+      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
         <div style={{ height: "93vh", width: "100 %", marginTop: "7vh" }}>
-          <Map zoom={15} center={{lat: lat, lng: lng}} mapId={"91e103c00ac4e104"}>
-            {orders && orders.map((item, index) => (
-              <>
-              <AdvancedMarker
-              position={{lat: item.pickup_lat, lng: item.pickup_long}}
-              onClick={() => handleClick(true, index)}
-            ></AdvancedMarker>
-            {open[index] && (
-              <InfoWindow
-                position={{lat: item.pickup_lat, lng: item.pickup_long}}
-                onCloseClick={() => handleClick(false, index)}
-              >
-                <p>
-                  {item.restaurant}
-                </p>
-                <p>
-                  {"Pickup at: " + item.pickup_location}
-                  </p>
-                  <p>
-                    {"Order before: " + new Date(item.order_time).getHours().toString().padStart(2, '0') + ":" + new Date(item.order_time).getMinutes().toString().padStart(2, '0') + (new Date(item.order_time).getHours() < 12 ? " AM" : " PM")}
-                  </p>
-              </InfoWindow>
-            )}
-              </>
-            ))}
+          <Map
+            zoom={15}
+            center={{ lat: lat, lng: lng }}
+            mapId={"91e103c00ac4e104"}
+          >
+            {orders &&
+              orders.map((item, index) => (
+                <>
+                  <AdvancedMarker
+                    position={{ lat: item.pickup_lat, lng: item.pickup_long }}
+                    onClick={() => handleClick(true, index)}
+                  ></AdvancedMarker>
+                  {open[index] && (
+                    <InfoWindow
+                      position={{ lat: item.pickup_lat, lng: item.pickup_long }}
+                      onCloseClick={() => handleClick(false, index)}
+                    >
+                      <p>{item.restaurant}</p>
+                      <p>{"Pickup at: " + item.pickup_location}</p>
+                      <p>
+                        {"Order before: " +
+                          new Date(item.order_time)
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0") +
+                          ":" +
+                          new Date(item.order_time)
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0") +
+                          (new Date(item.order_time).getHours() < 12
+                            ? " AM"
+                            : " PM")}
+                      </p>
+                    </InfoWindow>
+                  )}
+                </>
+              ))}
           </Map>
         </div>
         {/* <PlacesSearch></PlacesSearch> */}

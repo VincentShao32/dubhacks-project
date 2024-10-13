@@ -99,7 +99,7 @@ const Popup = () => {
   return (
     <div>
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg&libraries=places&callback=Function.prototype`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&callback=Function.prototype`}
         strategy="afterInteractive" // Load script after page becomes interactive
         onLoad={handleScriptLoad} // Set script loading to true after load TODO: resolve this not loading on first time entering page
         loading="async"
