@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import PlacesSearch from "../components/placesSearch";
+import Head from "next/head";
 
 import {
   APIProvider,
@@ -14,20 +16,23 @@ export default function Intro() {
   const [open, setOpen] = useState(false);
 
   return (
-    <APIProvider apiKey={"AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg"}>
-      <div style={{ height: "100vh", width: "100 %" }}>
-        <Map zoom={9} center={position} mapId={"91e103c00ac4e104"}>
-          <AdvancedMarker
-            position={position}
-            onClick={() => setOpen(true)}
-          ></AdvancedMarker>
-          {open && (
-            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-              <p>I'm in Hamburg! WOOHOO</p>
-            </InfoWindow>
-          )}
-        </Map>
-      </div>
-    </APIProvider>
+    <div>
+      <APIProvider apiKey={"AIzaSyAYWtobG2oSNJ86vInjuF4gzVDHUKuerXg"}>
+        <div style={{ height: "93vh", width: "100 %", marginTop: "7vh" }}>
+          <Map zoom={9} center={position} mapId={"91e103c00ac4e104"}>
+            <AdvancedMarker
+              position={position}
+              onClick={() => setOpen(true)}
+            ></AdvancedMarker>
+            {open && (
+              <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
+                <p>I'm in Hamburg! WOOHOO</p>
+              </InfoWindow>
+            )}
+          </Map>
+        </div>
+        {/* <PlacesSearch></PlacesSearch> */}
+      </APIProvider>
+    </div>
   );
 }

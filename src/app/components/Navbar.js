@@ -16,7 +16,7 @@ const Navbar = () => {
           list view
         </Link>
         <h1 className="text-4xl">Datch</h1>
-        <Link href="/orders" className="text-lg ">
+        <Link href="/map" className="text-lg ">
           map view
         </Link>
       </div>
