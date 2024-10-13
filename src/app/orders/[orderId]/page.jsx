@@ -5,7 +5,7 @@ import OrderListing from "../../components/OrderListing";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import ReceivedMessage from "../../components/ReceivedMessage";
 import SentMessage from "../../components/SentMessage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const page = ({ params }) => {
   const order = useQuery(api.functions.getGroupOrderByID, {
@@ -19,6 +19,7 @@ const page = ({ params }) => {
   const joinGroupOrder = useMutation(api.functions.addUserToGroupOrder);
 
   const { user, error, isLoading } = useUser();
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
 
   const colors = [
     "bg-light-red",
@@ -32,6 +33,28 @@ const page = ({ params }) => {
 
   const [newMessageText, setNewMessageText] = useState("");
 
+  useEffect(() => {
+    function get_location() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    }
+
+    get_location();
+  }, []);
+
   const getRandomColor = () => {
     //const randomIndex = Math.floor(Math.random() * colors.length);
     //return colors[randomIndex];
@@ -42,9 +65,30 @@ const page = ({ params }) => {
     return colors[i];
   };
 
+  const get_dist = (lat, long, lat2, long2) => {
+    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2, 2));
+  };
+
   return (
     <div className="mt-24 max-w-[800px] w-full mx-auto flex flex-col gap-4">
-      {order && <OrderListing order={order} color={getRandomColor()} />}
+      {order && (
+        <OrderListing
+          order={order}
+          color={getRandomColor()}
+          distance={
+            Math.round(
+              get_dist(
+                location.latitude,
+                location.longitude,
+                order.pickup_lat,
+                order.pickup_long
+              ) *
+                69 *
+                100
+            ) / 100
+          }
+        />
+      )}
       <div className="flex justify-between border-4 w-full border-red rounded-xl items-center">
         <button
           onClick={() => {

@@ -171,7 +171,7 @@ const Popup = () => {
                   }) => (
                     <div>
                       <label className="text-red font-[family-name:var(--font-satoshi-variable)] text-lg">
-                        Address Search
+                        Pickup Location
                       </label>
                       <input
                         {...getInputProps({

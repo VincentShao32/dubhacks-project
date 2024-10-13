@@ -21,7 +21,7 @@ export default function page() {
     "bg-dark-pink",
   ];
   let i = -1;
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
 
   let orders = useQuery(api.functions.listGroupOrders);
   const createOrder = useMutation(api.GroupOrderFunctions.createGroupOrder);
@@ -62,14 +62,14 @@ export default function page() {
         get_dist(
           a.pickup_lat,
           a.pickup_long,
-          location.latitude ? location.latitude : 0,
-          location.longitude ? location.longitude : 0
+          location.latitude,
+          location.longitude
         ) -
         get_dist(
           b.pickup_lat,
           b.pickup_long,
-          location.latitude ? location.latitude : 0,
-          location.longitude ? location.longitude : 0
+          location.latitude,
+          location.longitude
         )
     );
     orders = sortedOrders;
@@ -194,8 +194,25 @@ export default function page() {
       /> */}
 
       {orders &&
+        location.latitude &&
+        location.longitude &&
         orders.map((order) => (
-          <OrderListingLink order={order} color={getRandomColor()} />
+          <OrderListingLink
+            order={order}
+            color={getRandomColor()}
+            distance={
+              Math.round(
+                get_dist(
+                  location.latitude,
+                  location.longitude,
+                  order.pickup_lat,
+                  order.pickup_long
+                ) *
+                  69 *
+                  100
+              ) / 100
+            }
+          />
         ))}
 
       <Popup></Popup>

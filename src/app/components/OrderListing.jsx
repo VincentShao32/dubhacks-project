@@ -1,4 +1,4 @@
-const OrderListing = ({ order, color }) => {
+const OrderListing = ({ order, color, distance }) => {
   return (
     <div className={` ${color} rounded-lg w-full flex justify-between p-6`}>
       <div className="flex flex-col w-[50%] justify-between">
@@ -10,7 +10,7 @@ const OrderListing = ({ order, color }) => {
             {`@ ${order.pickup_location}`}
           </h1>
           <h1 className="font-[family-name:var(--font-satoshi-medium)] italic text-lg">
-            {order.distance}
+            {`${distance} mi`}
           </h1>
         </div>
         <div className="flex w-full justify-between text-lg">
@@ -31,7 +31,13 @@ const OrderListing = ({ order, color }) => {
         </h1>
         <div className="flex items-center gap-2">
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl">
-            {new Date(order.order_time).getHours().toString().padStart(2, '0') + ":" + new Date(order.order_time).getMinutes().toString().padStart(2, '0') + (new Date(order.order_time).getHours() < 12 ? " AM" : " PM")}
+            {new Date(order.order_time).getHours().toString().padStart(2, "0") +
+              ":" +
+              new Date(order.order_time)
+                .getMinutes()
+                .toString()
+                .padStart(2, "0") +
+              (new Date(order.order_time).getHours() < 12 ? " AM" : " PM")}
           </h1>
         </div>
         <div className="p-1"></div>

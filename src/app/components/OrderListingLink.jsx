@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const OrderListingLink = ({ order, color }) => {
+const OrderListingLink = ({ order, color, distance }) => {
   return (
     <Link
       href={`orders/${order._id}`}
@@ -15,7 +15,7 @@ const OrderListingLink = ({ order, color }) => {
             {`@ ${order.pickup_location}`}
           </h1>
           <h1 className="font-[family-name:var(--font-satoshi-medium)] italic text-lg">
-            {order.distance}
+            {`${distance} mi`}
           </h1>
         </div>
         <div className="flex w-full justify-between text-lg">
@@ -33,7 +33,13 @@ const OrderListingLink = ({ order, color }) => {
         </h1>
         <div className="flex items-center gap-2">
           <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl">
-          {new Date(order.order_time).getHours().toString().padStart(2, '0') + ":" + new Date(order.order_time).getMinutes().toString().padStart(2, '0') + (new Date(order.order_time).getHours() < 12 ? " AM" : " PM")}
+            {new Date(order.order_time).getHours().toString().padStart(2, "0") +
+              ":" +
+              new Date(order.order_time)
+                .getMinutes()
+                .toString()
+                .padStart(2, "0") +
+              (new Date(order.order_time).getHours() < 12 ? " AM" : " PM")}
           </h1>
         </div>
         <div className="p-1"></div>
