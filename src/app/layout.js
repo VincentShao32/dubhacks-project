@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
-
+// import { ConvexProviderWithAuth } from "convex/react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 import Navbar from "./components/Navbar";
