@@ -1,16 +1,16 @@
 "use client";
 
-import Loading from "../components/Loading";
-import ErrorMessage from "../components/ErrorMessage";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import OrderListing from "../components/OrderListing";
+import OrderListingLink from "../components/OrderListingLink";
 import { useEffect, useState } from "react";
-import PlacesSearch from "../components/placesSearch";
+import PlacesSearch from "../components/PlacesSearch";
 import Popup from "../components/Popup";
 import { getServerActionDispatcher } from "next/dist/client/components/app-router";
 
+import { useAuth0 } from '@auth0/nextjs-auth0';
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+
 export default function page() {
-  const [location, setLocation] = useState(null);
   const [restaurant, setRestaurant] = useState("All Restaurants");
   const [distance, setDistance] = useState(1);
   const colors = [
@@ -22,29 +22,68 @@ export default function page() {
     "bg-dark-pink"
   ];
   let i = -1
+  const [location, setLocation] = useState(null);
+
+  let orders = useQuery(api.functions.listGroupOrders);
+  const createOrder = useMutation(api.GroupOrderFunctions.createGroupOrder);
+  const deleteOldOrders = useMutation(api.functions.deleteOldGroupOrders);
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
+    function get_location() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
     }
-  }, []);
+
+    deleteOldOrders();
+
+    get_location();
+    if (orders && location.latitude && location.longitude) {
+      sort_by_distance();
+    }
+  }, [orders]);
+
+  function sort_by_distance() {
+    const sortedOrders = orders.sort(
+      (a, b) =>
+        get_dist(
+          a.pickup_lat,
+          a.pickup_long,
+          location.latitude,
+          location.longitude
+        ) -
+        get_dist(
+          b.pickup_lat,
+          b.pickup_long,
+          location.latitude,
+          location.longitude
+        )
+    );
+    orders = sortedOrders;
+  }
+
+  const get_dist = (lat, long, lat2, long2) => {
+    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2, 2));
+  };
 
   async function handleSubmit(e) {
+    console.log("submitted");
     e.preventDefault();
     console.log("submitted");
   }
+
 
   const getRandomColor = () => {
     //const randomIndex = Math.floor(Math.random() * colors.length);
@@ -58,11 +97,16 @@ export default function page() {
 
   }
 
+  const getDistance = (lat, long, lat2, long2) => {
+    return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2));
+  };
+
+
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
       <Popup />
       <h1 className="text-3xl font-[family-name:var(--font-satoshi-variable)] text-red">
-        Current Group Orders
+        Upcoming Datch Groups
       </h1>
       <form className="flex justify-between items-center gap-4">
         <div
@@ -96,8 +140,7 @@ export default function page() {
         <button className="bg-red text-white p-2 rounded-xl font-[family-name:var(--font-satoshi-variable)]">
           Submit
         </button>
-      </form>
-      
+      </form>     
       <OrderListing
         order={{
           restaurant: "Chipotle",
@@ -153,8 +196,9 @@ export default function page() {
         }}
         color = { getRandomColor() }
       />
+      {orders && orders.map((order) => <OrderListingLink order={order} />)}
 
-      <PlacesSearch></PlacesSearch>
+      <Popup></Popup>
     </div>
   );
 }
