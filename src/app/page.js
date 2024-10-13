@@ -1,46 +1,66 @@
 "use client";
-import Link from "next/link";
-import { useState } from "react";
+
+import image from "./image.png";
+import Image from "next/image";
+import image2 from "../graphics/image 4.png";
+import image3 from "../graphics/image 1.png";
 
 export default function Home() {
-  let a = 5;
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpenGroupWindowCreate = () => {
-    setIsOpen(true);
-  };
-
-  // Function to close the popup
-  const closePopup = () => {
-    setIsOpen(false);
-  };
-
   return (
-    <ul>
-      <li>
-        <Link href="/">Home</Link>
-      </li>
-      <li>
-        <Link href="/about">About Us</Link>
-      </li>
-      <li>
-        <Link href="/api/auth/login">Login</Link>
-      </li>
-      <li>
-        <a href="/api/auth/logout">Logout</a>
-      </li>
-      <button onClick={handleOpenGroupWindowCreate}>Create Group Order</button>
-      {isOpen && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>Popup Title</h2>
-            <p>
-              This is the popup content. You can put anything you want here.
-            </p>
-            <button onClick={closePopup}>Close Popup</button>
+    <div className="flex flex-col">
+      <div className="min-h-screen flex font-[family-name:var(--font-satoshi-variable)]">
+        <div className=" bg-white w-[34%] flex flex-col justify-center  px-[3.5rem] gap-4">
+          <h1 className="font-[family-name:var(--font-satoshi-variable)] text-[10rem] text-red leading-none ">
+            Datch
+          </h1>
+          <h1 className=" text-4xl text-red">
+            The more you share, the more you save
+          </h1>
+          <a
+            href="/api/auth/login"
+            className="w-full rounded-xl bg-red text-white text-2xl p-4"
+          >
+            Get started
+          </a>
+        </div>
+        <Image src={image} className="w-[66%] object-cover" />
+      </div>
+      <div className="w-full bg-red">
+        <div className="flex justify-between pl-8 py-8">
+          <Image src={image2} />
+          <div className="w-[1200px] bg-white">
+            <div className="flex flex-col p-8 gap-8">
+              <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl text-red">
+                Expensive delivery?
+              </h1>
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
+                Craving late-night takeout, but don't want to spend fees? Datch
+                allows you to save by organizing group online orders.
+              </p>
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
+                Only pay for what you need
+              </p>
+            </div>
           </div>
         </div>
-      )}
-    </ul>
+        <div className="flex justify-between pr-8 py-8">
+          <div className="w-[950px] bg-white flex items-center">
+            <div className="flex flex-col p-8 gap-8">
+              <h1 className="font-[family-name:var(--font-satoshi-variable)] text-5xl text-red">
+                Connect over your favorite foods.
+              </h1>
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
+                Datch brings communities and campuses together.
+              </p>
+              <p className="font-[family-name:var(--font-satoshi-medium)] text-red text-3xl">
+                Meet new friends when trying new food, or reconnect with
+                classmates over your favorite local spots.
+              </p>
+            </div>
+          </div>
+          <Image src={image3} className="object-contain h-[375px]" />
+        </div>
+      </div>
+    </div>
   );
 }
