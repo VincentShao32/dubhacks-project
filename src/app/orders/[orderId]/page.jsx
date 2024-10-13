@@ -17,6 +17,7 @@ const page = ({ params }) => {
   const sendMessage = useMutation(api.functions.send);
 
   const joinGroupOrder = useMutation(api.functions.addUserToGroupOrder);
+  const leaveGroupOrder = useMutation(api.functions.leaveGroupOrder);
 
   const { user, error, isLoading } = useUser();
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
@@ -92,14 +93,29 @@ const page = ({ params }) => {
       <div className="flex justify-between border-4 w-full border-red rounded-xl items-center">
         <button
           onClick={() => {
-            joinGroupOrder({
-              order_id: params.orderId,
-              user_email: user.email,
-            });
+            if (
+              order.emails.indexOf(user.email) === -1 &&
+              order.author_email != user.email
+            ) {
+              joinGroupOrder({
+                order_id: params.orderId,
+                user_email: user.email,
+              });
+            } else {
+              leaveGroupOrder({
+                order_id: params.orderId,
+                user_email: user.email,
+              });
+            }
           }}
           className="rounded-lg text-white bg-red py-2 px-4 font-[family-name:var(--font-satoshi-medium)]"
         >
-          Join Group
+          {order &&
+          user &&
+          order.emails.indexOf(user.email) === -1 &&
+          order.author_email !== user.email
+            ? "Join Group"
+            : "Leave Group"}
         </button>
         <a
           href=""

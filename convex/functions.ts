@@ -26,18 +26,49 @@ export const listGroupOrders = query({
     //     body: message.body.replaceAll(":)", "🤗"),
     //   })
     // );
-    },
-  });
-  
-  export const createGroupOrder = mutation({
-    args: { author: v.string(), order_time: v.number(), restaurant: v.string(), uber_link: v.string(), pickup_location : v.string(), pickup_address : v.string(), pickup_lat : v.number(), pickup_long : v.number()},
-    handler: async (ctx, { author, order_time, restaurant, uber_link, pickup_address, pickup_lat, pickup_long, pickup_location }) => {
+  },
+});
+
+export const createGroupOrder = mutation({
+  args: {
+    author: v.string(),
+    order_time: v.number(),
+    restaurant: v.string(),
+    uber_link: v.string(),
+    pickup_location: v.string(),
+    pickup_address: v.string(),
+    pickup_lat: v.number(),
+    pickup_long: v.number(),
+  },
+  handler: async (
+    ctx,
+    {
+      author,
+      order_time,
+      restaurant,
+      uber_link,
+      pickup_address,
+      pickup_lat,
+      pickup_long,
+      pickup_location,
+    }
+  ) => {
     let emails: string[] = []; //TODO: add email of the creator to the array of emails
-      const truncated_name = pickup_address.split(',')[0]
-      const new_id = await ctx.db.insert("GroupOrder", { author, restaurant, pickup_address, pickup_lat, pickup_long, uber_link, order_time, emails, pickup_location: truncated_name});
-      return new_id;
-    },
-  });
+    const truncated_name = pickup_address.split(",")[0];
+    const new_id = await ctx.db.insert("GroupOrder", {
+      author,
+      restaurant,
+      pickup_address,
+      pickup_lat,
+      pickup_long,
+      uber_link,
+      order_time,
+      emails,
+      pickup_location: truncated_name,
+    });
+    return new_id;
+  },
+});
 
 export const getGroupOrderByID = query({
   args: { id: v.id("GroupOrder") },
@@ -63,6 +94,21 @@ export const addUserToGroupOrder = mutation({
         return;
       }
       current_emails.push(args.user_email);
+      await ctx.db.patch(args.order_id, { emails: current_emails });
+    }
+  },
+});
+
+export const leaveGroupOrder = mutation({
+  args: { order_id: v.id("GroupOrder"), user_email: v.string() },
+  handler: async (ctx, args) => {
+    const order = await ctx.db.get(args.order_id);
+    if (order) {
+      const current_emails: string[] = order["emails"];
+      let index = current_emails.indexOf(args.user_email);
+      if (index > -1) {
+        current_emails.splice(index, 1);
+      }
       await ctx.db.patch(args.order_id, { emails: current_emails });
     }
   },
@@ -100,14 +146,16 @@ export const sortGroupOrdersByLocation = query({
 });
 
 export const deleteOldGroupOrders = mutation({
-  args: {current_time : v.number()},
+  args: { current_time: v.number() },
   handler: async (ctx, args) => {
-    const old = await ctx.db.query("GroupOrder").filter(q => 
-      q.lt(q.field("order_time"), args.current_time)).collect();
-    for(let i = 0; i < old.length; i++){
+    const old = await ctx.db
+      .query("GroupOrder")
+      .filter((q) => q.lt(q.field("order_time"), args.current_time))
+      .collect();
+    for (let i = 0; i < old.length; i++) {
       await ctx.db.delete(old[i]._id);
     }
-  }
+  },
 });
 
 const getDist = (lat: number, long: number, lat2: number, long2: number) => {
