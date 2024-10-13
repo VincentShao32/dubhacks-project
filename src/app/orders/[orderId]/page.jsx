@@ -16,6 +16,8 @@ const page = ({ params }) => {
   });
   const sendMessage = useMutation(api.functions.send);
 
+  const joinGroupOrder = useMutation(api.functions.addUserToGroupOrder);
+
   const { user, error, isLoading } = useUser();
 
   const [newMessageText, setNewMessageText] = useState("");
@@ -24,14 +26,22 @@ const page = ({ params }) => {
     <div className="mt-24 max-w-[800px] w-full mx-auto flex flex-col gap-4">
       {order && <OrderListing order={order} />}
       <div className="flex justify-between border-4 w-full border-red rounded-xl items-center">
-        <div className="rounded-lg text-white bg-red py-2 px-4 font-[family-name:var(--font-satoshi-medium)]">
+        <button
+          onClick={() => {
+            joinGroupOrder({
+              order_id: params.orderId,
+              user_email: user.email,
+            });
+          }}
+          className="rounded-lg text-white bg-red py-2 px-4 font-[family-name:var(--font-satoshi-medium)]"
+        >
           Join Group
-        </div>
+        </button>
         <a
           href=""
           className="font-[family-name:var(--font-satoshi-medium)] italic pr-8"
         >
-          link
+          {order.uber_link}
         </a>
       </div>
       <div className="flex w-full justify-between">
@@ -39,7 +49,7 @@ const page = ({ params }) => {
           <div className="p-4 w-full object-cover rounded-t-lg bg-red text-white font-[family-name:var(--font-satoshi-variable)]">
             Conversation starter:
           </div>
-          <div className="flex p-4 rounded-b-lg w-full items-center bg-gray-100 text-red font-[family-name:var(--font-satoshi-variable)] h-[490px]">
+          <div className="flex p-4 rounded-b-lg w-full items-center bg-gray-100 text-red text-3xl font-[family-name:var(--font-satoshi-variable)] h-[490px]">
             <h1>What's your ultimate comfort food?</h1>
           </div>
         </div>

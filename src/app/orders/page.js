@@ -72,7 +72,7 @@ export default function page() {
 
   const getDistance = (lat, long, lat2, long2) => {
     return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2));
-  }
+  };
 
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">
