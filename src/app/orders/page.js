@@ -4,7 +4,9 @@ import OrderListingLink from "../components/OrderListingLink";
 import { useEffect, useState } from "react";
 import PlacesSearch from "../components/PlacesSearch";
 import Popup from "../components/Popup";
-import { useAuth0 } from '@auth0/nextjs-auth0';
+import { useAuth0 } from "@auth0/nextjs-auth0";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 export default function page() {
   const [restaurant, setRestaurant] = useState("All Restaurants");
@@ -70,7 +72,7 @@ export default function page() {
 
   const getDistance = (lat, long, lat2, long2) => {
     return Math.sqrt(Math.pow(lat - lat2, 2) + Math.pow(long - long2));
-  }
+  };
 
   return (
     <div className="flex flex-col max-w-[800px] w-full mx-auto mt-28 gap-6">

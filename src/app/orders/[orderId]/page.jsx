@@ -41,7 +41,7 @@ const page = ({ params }) => {
           href=""
           className="font-[family-name:var(--font-satoshi-medium)] italic pr-8"
         >
-          link
+          {order.uber_link}
         </a>
       </div>
       <div className="flex w-full justify-between">
